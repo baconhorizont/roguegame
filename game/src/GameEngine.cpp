@@ -3,8 +3,33 @@
 
 namespace game
 {
-    void GameEngine::run()
+    int GameEngine::run()
     {
-        std::cout << "Hello Bence" << std::endl;
+        init();
+        gameLoop();
+        return finish();
     }
+
+    void GameEngine::init()
+    {
+    }
+    void GameEngine::gameLoop()
+    {
+        std::cout << "alma" << std::endl;
+    }
+    void GameEngine::handleInput()
+    {
+    }
+    void GameEngine::update()
+    {
+    }
+    void GameEngine::render()
+    {
+    }
+
+    int GameEngine::finish()
+    {
+        return 0;
+    }
+
 }
