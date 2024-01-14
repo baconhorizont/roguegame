@@ -15,5 +15,8 @@ namespace game
         void render();
 
         int finish();
+    private:
+        int x = 3;
+        int y = 3;
     };
 }
