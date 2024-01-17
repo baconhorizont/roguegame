@@ -1,4 +1,7 @@
 #pragma once
+#include <chrono>
+
+
 namespace game
 {
     class GameEngine
@@ -18,5 +21,8 @@ namespace game
     private:
         int x = 3;
         int y = 3;
+        bool quit = false;
+        bool isStateChanged = true;
+        std::chrono::time_point<std::chrono::system_clock> currentTime;
     };
 }
