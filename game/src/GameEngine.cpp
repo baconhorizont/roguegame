@@ -1,15 +1,14 @@
 #include "GameEngine.hpp"
 #include <iostream>
 #include <windows.h>
-
-
+#include "GameStateEnum.hpp"
 
 namespace game
 {
 #define IS_PRESSED 0x8000
 
-using namespace std::chrono_literals;
-constexpr std::chrono::nanoseconds timeStep(50ms);
+    using namespace std::chrono_literals;
+    constexpr std::chrono::nanoseconds timeStep(50ms);
 
     int GameEngine::run()
     {
@@ -38,35 +37,38 @@ constexpr std::chrono::nanoseconds timeStep(50ms);
                 update();
                 render();
             }
-            
-            
         }
     }
     void GameEngine::handleInput()
     {
-        if(GetKeyState('W') & IS_PRESSED)
+        if (GetKeyState('W') & IS_PRESSED)
         {
             --y;
             isStateChanged = true;
         }
-        else if(GetKeyState('S') & IS_PRESSED)
+        else if (GetKeyState('S') & IS_PRESSED)
         {
             ++y;
             isStateChanged = true;
         }
-        else if(GetKeyState('A') & IS_PRESSED)
+        else if (GetKeyState('A') & IS_PRESSED)
         {
             --x;
             isStateChanged = true;
         }
-        else if(GetKeyState('D') & IS_PRESSED)
+        else if (GetKeyState('D') & IS_PRESSED)
         {
             ++x;
             isStateChanged = true;
         }
-        else if(GetKeyState('Q') & IS_PRESSED)
+        else if (GetKeyState('Q') & IS_PRESSED)
         {
             quit = true;
+        }
+        else if (currentGameState == GameStateEnum::START && GetKeyState(VK_SPACE) & IS_PRESSED)
+        {
+            currentGameState = GameStateEnum::PLAY;
+            isStateChanged = true;
         }
     }
     void GameEngine::update()
@@ -74,22 +76,31 @@ constexpr std::chrono::nanoseconds timeStep(50ms);
     }
     void GameEngine::render()
     {
-        if(!isStateChanged){
+        if (!isStateChanged)
+        {
             return;
         }
 
-        system("cls");
-
-        for(int height = 0; height < y-1; ++height)
+        if (currentGameState == GameStateEnum::PLAY)
         {
+            system("cls");
+
+            for (int height = 0; height < y - 1; ++height)
+            {
+                std::cout << std::endl;
+            }
+            for (int widht = 0; widht < x - 1; ++widht)
+            {
+                std::cout << " ";
+            }
+            std::cout << "@";
             std::cout << std::endl;
         }
-        for(int widht = 0; widht < x-1; ++widht)
+        if (currentGameState == GameStateEnum::START)
         {
-            std::cout << " ";
+            system("cls");
+            std::cout << "Press SPACE to play." << std::endl;
         }
-        std::cout << "@";
-        std::cout << std::endl;
         isStateChanged = false;
     }
 

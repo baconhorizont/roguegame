@@ -1,6 +1,6 @@
 #pragma once
 #include <chrono>
-
+#include "GameStateEnum.hpp"
 
 namespace game
 {
@@ -18,11 +18,13 @@ namespace game
         void render();
 
         int finish();
+
     private:
         int x = 3;
         int y = 3;
         bool quit = false;
         bool isStateChanged = true;
         std::chrono::time_point<std::chrono::system_clock> currentTime;
+        GameStateEnum currentGameState = GameStateEnum::START;
     };
 }
